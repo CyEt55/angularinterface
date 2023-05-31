@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { without } from 'lodash';
 
 library.add(faTimes);
 
@@ -19,5 +20,9 @@ export class AppComponent implements OnInit {
     this.http.get<Object[]>('../assets/data.json').subscribe(data => {
       this.theList = data;
     });
+  }
+
+  deleteApt(theApt: Object){
+    this.theList = without(this.theList, theApt);
   }
 }
