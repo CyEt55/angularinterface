@@ -13,7 +13,7 @@ export class ListComponent {
   @Input() aptList;
   @Output() deleteEvt = new EventEmitter();
 
-  handleDelete(theApt: object) {
+  privatehandleDelete(theApt: object) {
     this.deleteEvt.emit(theApt);
   }
 }
