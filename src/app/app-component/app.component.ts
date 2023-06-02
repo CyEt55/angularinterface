@@ -65,6 +65,13 @@ export class AppComponent implements OnInit {
     });
   }
 
+  orderApt(orderItems){
+    this.orderBy = orderItems.orderBy;
+    this.orderType = orderItems.orderType;
+
+    this.sortItems();
+  }
+
   constructor(private http: HttpClient) {
     this.orderBy = 'petName';
     this.orderType = 'asc';
