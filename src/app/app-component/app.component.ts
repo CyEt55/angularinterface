@@ -13,6 +13,8 @@ library.add(faTimes, faPlus);
 export class AppComponent implements OnInit {
   theList: object[];
   modifiedList: object[];
+  orderBy: string = 'petName';
+  orderType: string = 'asc'
 
   addApt(theApt: object) {
     this.theList.unshift(theApt);
@@ -38,14 +40,38 @@ export class AppComponent implements OnInit {
           .includes(theQuery.toLowerCase())
       );
     });
+
+    this.sortItems();
   }
 
-  constructor(private http: HttpClient) {}
+  sortItems(){
+    let order: number;
+
+    if(this.orderType === 'asc'){
+      order = 1;
+    }else{
+      order = -1;
+    }
+
+    this.modifiedList.sort((a,b) => {
+      if(a[this.orderBy].toLowerCase() < b[this.orderBy].toLowerCase()){
+        return -1 * order;
+      }
+      if(a[this.orderBy].toLowerCase() > b[this.orderBy].toLowerCase()){
+        return 1 * order;
+      }
+    })
+  }
+
+  constructor(
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.http.get<Object[]>('../assets/data.json').subscribe(data => {
       this.theList = data;
       this.modifiedList = data;
+      this.sortItems();
     });
   }
 }
