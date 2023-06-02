@@ -14,15 +14,19 @@ export class AppComponent implements OnInit {
   title = 'Wisdom Pet Medicine';
   theList: object[];
 
-  deleteApt(theApt: object) {
-    this.theList = without(this.theList, theApt);
-  }
-
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.http.get<Object[]>('../assets/data.json').subscribe(data => {
       this.theList = data;
     });
+  }
+
+  addApt(theApt: object) {
+    this.theList.unshift(theApt);
+  }
+
+  deleteApt(theApt: object) {
+    this.theList = without(this.theList, theApt);
   }
 }
